@@ -1,0 +1,25 @@
+.content-grid {
+    display: grid;
+    grid-template-columns:
+        [full-width-start] 140px [content-start] calc(100% - (140px * 2)) [content-end] 140px [full-width-end];
+
+    @include tablet {
+        grid-template-columns:
+            [full-width-start] 80px [content-start] calc(100% - (80px * 2)) [content-end] 80px [full-width-end];
+    }
+
+    @include mobile {
+        grid-template-columns:
+            [full-width-start] 16px [content-start] calc(100% - (16px * 2)) [content-end] 16px [full-width-end];
+    }
+}
+
+.content-grid> :not(.full-width),
+.full-width> :not(.full-width) {
+    grid-column: content;
+}
+
+
+.content-grid>.full-width {
+    grid-column: full-width;
+}

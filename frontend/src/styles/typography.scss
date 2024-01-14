@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+
+
+html {
+    font-family: 'Rubik', sans-serif;
+    color: var(--clr-text-main);
+    font-size: 16px;
+    line-height: 1.3rem;
+    font-weight: 500;
+}
+
+input,
+button {
+    font-family: 'Rubik', sans-serif;
+}
+
+.text-big {
+    font-size: 2rem;
+    line-height: 2.2rem;
+
+    @include tablet {
+        font-size: 1.8rem;
+        line-height: 2rem;
+    }
+
+    @include mobile {
+        font-size: 1.5rem;
+        line-height: 1.7rem;
+    }
+}
+
+h1 {
+    font-size: 6rem;
+    line-height: 6rem;
+    margin-bottom: 80px;
+
+    @include tablet {
+        font-size: 4rem;
+        line-height: 4rem;
+        margin-bottom: 40px;
+    }
+
+    @include mobile {
+        font-size: 3rem;
+        line-height: 3rem;
+        margin-bottom: 30px;
+    }
+}
+
+h2 {
+    font-size: 4rem;
+    line-height: 4rem;
+    margin-bottom: 40px;
+
+    @include tablet {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+
+    @include mobile {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+}
+
+h3 {
+    font-size: 2rem;
+    line-height: 2rem;
+    margin-bottom: 20px;
+
+    @include tablet {
+        font-size: 1.8rem;
+        line-height: 1, 8rem;
+    }
+
+    @include mobile {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+}
