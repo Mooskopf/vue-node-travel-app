@@ -1,4 +1,4 @@
-#Travel App
+# Travel App
 
 You need to have MYSQL running on your machine and add a Database named "travel_db" with a table "destinations" that has two varchar values "name" and "color"
 
