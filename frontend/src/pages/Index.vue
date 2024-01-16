@@ -16,9 +16,15 @@ import AddDestination from "@/components/destination/AddDestination.vue";
 import { ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { storeToRefs } from "pinia";
+import { onMounted } from 'vue';
+import getDestinations from '@/api/getDestinations';
 
 const { destinations } = storeToRefs(useDataStore())
 const modalActive = ref(false)
+
+onMounted(() => {
+  getDestinations()
+})
 
 function closeModal(){
     modalActive.value = false

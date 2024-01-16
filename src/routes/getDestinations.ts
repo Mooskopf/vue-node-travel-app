@@ -20,7 +20,7 @@ export function getDestinations(res: Response) {
         if (Object.keys(destinations).length !== 0) {
             return res.status(StatusCodes.OK).json({ destinations: destinations })
         } else {
-            return res.status(StatusCodes.NOT_FOUND).json({ msg: "No destinations at this time.." })
+            return res.status(StatusCodes.NOT_FOUND).json({ msg: "No destinations was found" })
         }
     })
 }

@@ -38,6 +38,7 @@ const value = ref("")
     padding: 4px 10px;
     border: 2px solid black;
     border-radius: 16px;
+    background: transparent;
 
     &::placeholder {
         font-size: 0.8rem;

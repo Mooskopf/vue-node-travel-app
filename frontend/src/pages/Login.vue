@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="logged-out-page">
         <Input type="email" :errorEmpty="errorMailEmpty" :error="errorMail" :updateInput="updateEmail" placehoder="Email"
             @click="() => {
                 errorMail = ''
@@ -12,7 +12,7 @@
         }" />
         <div class="error-text" v-if="loginError">Credentials not correct</div>
         <button type="button" @click="login" class="btn">Login</button>
-        <button type="button" @click="router.replace('/register')" class="btn">Register</button>
+        <button type="button" @click="router.push('/register')" class="btn">Register</button>
     </div>
 </template>
 
@@ -26,7 +26,7 @@ import { useRouter } from 'vue-router';
 const authstore = useAuthStore()
 const router = useRouter()
 
-const mail = ref("")
+const email = ref("")
 const password = ref("")
 const errorMailEmpty = ref(false)
 const errorMail = ref("")
@@ -34,7 +34,7 @@ const errorPasswordEmpty = ref(false)
 const loginError = ref(false)
 
 function updateEmail(value: string) {
-    mail.value = value
+    email.value = value
 }
 
 function updatePassword(value: string) {
@@ -42,12 +42,12 @@ function updatePassword(value: string) {
 }
 
 function login() {
-    if (mail.value === "") {
+    if (email.value === "") {
         errorMailEmpty.value = true
         return
     }
 
-    if (!validateEmail(mail.value)) {
+    if (!validateEmail(email.value)) {
         errorMail.value = "Please enter a valid mail address"
         return
     }
@@ -57,7 +57,7 @@ function login() {
         return
     }
 
-    const loggedin = authstore.login()
+    const loggedin = authstore.login(email.value, password.value)
 
     if (!loggedin) {
         loginError.value = true
@@ -66,9 +66,4 @@ function login() {
 
 </script>
 
-<style scoped lang="scss">
-.btn {
-    margin-top: 20px;
-    margin-right: 10px;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="logged-out-page">
         <Input type="text" :errorEmpty="errorNameEmpty" :updateInput="updateName" placehoder="Name" @click="() => {
             errorNameEmpty = false
         }" />
@@ -14,7 +14,7 @@
                 errorPasswordEmpty = false
             }" />
         <button type="button" @click="checkInputs" class="btn">Register</button>
-        <button type="button"  @click="router.replace('/login')" class="btn">Back to Login</button>
+        <button type="button" @click="router.push('/login')" class="btn">Back to Login</button>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-const mail = ref("")
+const email = ref("")
 const password = ref("")
 const name = ref("")
 const errorNameEmpty = ref(false)
@@ -41,7 +41,7 @@ function updateName(value: string) {
 }
 
 function updateEmail(value: string) {
-    mail.value = value
+    email.value = value
 }
 
 function updatePassword(value: string) {
@@ -54,12 +54,12 @@ function checkInputs() {
         return
     }
 
-    if (mail.value === "") {
+    if (email.value === "") {
         errorMailEmpty.value = true
         return
     }
 
-    if (!validateEmail(mail.value)) {
+    if (!validateEmail(email.value)) {
         errorMail.value = "Please enter a valid mail address"
         return
     }
@@ -76,7 +76,7 @@ function checkInputs() {
 
     const user = {
         name: name.value,
-        email: mail.value
+        email: email.value
     }
 
     register(user, password.value)
