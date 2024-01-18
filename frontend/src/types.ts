@@ -12,3 +12,8 @@ export type User = {
     email: string
 }
 
+export type Review = {
+    stars: 1 | 2 | 3 | 4 | 5,
+    text: string
+}
+
