@@ -10,9 +10,19 @@ export default async function register(userObject: User, password: string) {
         password: password
     }
 
-    request("post", "/register", data).then(() => {
+    let out = false
+
+    await request("post", "/register", data).then(() => {
         authstore.login(userObject.email, password)
     }).catch(err => {
-        console.log(err)
+        if (err.response.status === 500) {
+            if (err.response.data.msg === "Email exists") {
+                out = true
+            }
+        } else {
+            console.log(err)
+        }
     })
+
+    return out
 }

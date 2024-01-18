@@ -1,13 +1,13 @@
 <template>
     <div class="logged-out-page">
-        <Input type="text" :errorEmpty="errorNameEmpty" :updateInput="updateName" placehoder="Name" @click="() => {
-            errorNameEmpty = false
-        }" />
         <Input type="email" :errorEmpty="errorMailEmpty" :error="errorMail" :updateInput="updateEmail" placehoder="Email"
             @click="() => {
                 errorMail = ''
                 errorMailEmpty = false
             }" />
+        <Input type="text" :errorEmpty="errorNameEmpty" :updateInput="updateName" placehoder="Name" @click="() => {
+            errorNameEmpty = false
+        }" />
         <Input type="password" :errorEmpty="errorPasswordEmpty" :error="errorPassword" :updateInput="updatePassword"
             placehoder="Password" @click="() => {
                 errorPassword = ''
@@ -48,7 +48,7 @@ function updatePassword(value: string) {
     password.value = value
 }
 
-function checkInputs() {
+async function checkInputs() {
     if (name.value === "") {
         errorNameEmpty.value = true
         return
@@ -79,7 +79,11 @@ function checkInputs() {
         email: email.value
     }
 
-    register(user, password.value)
+    const mailExists = await register(user, password.value)
+    console.log(mailExists)
+    if (mailExists) {
+        errorMail.value = "Email exists"
+    }
 }
 
 </script>
