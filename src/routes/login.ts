@@ -13,7 +13,7 @@ export function login(req: Request, res: Response) {
     const sqlMail = `SELECT * FROM users WHERE users.email = '${email}'`
 
     db.query(sqlMail, (err, result) => {
-        if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+        if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
 
         if (result.length === 0) {
             return res.status(StatusCodes.NOT_FOUND).json({ msg: "User does not exist" })
@@ -38,7 +38,8 @@ export function login(req: Request, res: Response) {
 
                 return res.status(StatusCodes.FORBIDDEN).json({ msg: "Password not correct" })
             }).catch(err => {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+                console.log(err)
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
             })
     })
 }

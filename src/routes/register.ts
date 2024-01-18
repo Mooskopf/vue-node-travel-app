@@ -12,7 +12,7 @@ export function register(req: Request, res: Response) {
     const sqlMail = `SELECT * FROM users WHERE users.email = '${user.email}'`
 
     db.query(sqlMail, async (err, result) => {
-        if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+        if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
 
         if (result.length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Email exists" })
@@ -29,7 +29,7 @@ export function register(req: Request, res: Response) {
         const sql = `INSERT INTO users(name, email, password) VALUES ('${user.name}', '${user.email}', '${password}')`
 
         db.query(sql, (err) => {
-            if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+            if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
 
             return res.status(StatusCodes.OK).json({ msg: "User added" })
         })
