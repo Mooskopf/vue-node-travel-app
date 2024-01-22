@@ -14,7 +14,7 @@ import Destination from "@/components/destination/Destination.vue";
 import Modal from "@/components/generic/Modal.vue";
 import AddDestination from "@/components/destination/AddDestination.vue";
 import { ref } from "vue";
-import { useDataStore } from "@/stores/dataStore";
+import { useDataStore } from "@/stores/datastore";
 import { storeToRefs } from "pinia";
 import { onMounted } from 'vue';
 import getDestinations from '@/api/getDestinations';

@@ -18,6 +18,8 @@ export default async function register(userObject: User, password: string) {
         if (err.response.status === 500) {
             if (err.response.data.msg === "Email exists") {
                 out = true
+            } else {
+                console.log(err)
             }
         } else {
             console.log(err)

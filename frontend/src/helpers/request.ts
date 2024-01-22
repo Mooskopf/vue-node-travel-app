@@ -13,7 +13,7 @@ export default async function request(kind: string, path: string, data?: Object)
         },
         data
     }).then((res: AxiosResponse) => {
-        if (res.status === 401 && authstore.token) {
+        if (res.status === 403 && authstore.token) {
             authstore.logout()
         }
 
@@ -23,6 +23,9 @@ export default async function request(kind: string, path: string, data?: Object)
             throw res
         }
     }).catch((err: AxiosError) => {
+        if (err.response?.status === 403 && authstore.token) {
+            authstore.logout()
+        }
         throw err
     })
 }

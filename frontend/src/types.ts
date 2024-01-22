@@ -1,6 +1,7 @@
 export type Destination = {
     name: string,
-    color: string
+    color: string,
+    reviews: Review[]
 }
 
 export type DestinationResponse = {
@@ -12,8 +13,11 @@ export type User = {
     email: string
 }
 
+export type Stars = 0 | 1 | 2 | 3 | 4 | 5
+
 export type Review = {
-    stars: 1 | 2 | 3 | 4 | 5,
+    author: string,
+    stars: Stars,
     text: string
 }
 

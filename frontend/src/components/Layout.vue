@@ -3,7 +3,9 @@
         <div>
             <div class="spacer"></div>
             <Header />
-            <slot></slot>
+            <div class="content">
+                <slot></slot>
+            </div>
             <Footer />
         </div>
     </div>
@@ -14,4 +16,10 @@ import Header from '@/components/navigation/Header.vue';
 import Footer from '@/components/navigation/Footer.vue';
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+.content{
+    margin-bottom: 80px;
+}
+
+</style>

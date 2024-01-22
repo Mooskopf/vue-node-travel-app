@@ -4,17 +4,17 @@ import { Request, Response } from "express"
 import bcrypt from "bcrypt"
 import type { User } from "../types";
 
-export function register(req: Request, res: Response) {
+export async function register(req: Request, res: Response) {
 
     const user: User = req.body?.user
     let password = req.body?.password
 
     const sqlMail = `SELECT * FROM users WHERE users.email = '${user.email}'`
 
-    db.query(sqlMail, async (err, result) => {
-        if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
+    try {
+        const result: any = await db.query(sqlMail)
 
-        if (result.length !== 0) {
+        if (result[0].length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Email exists" })
         }
 
@@ -28,10 +28,11 @@ export function register(req: Request, res: Response) {
 
         const sql = `INSERT INTO users(name, email, password) VALUES ('${user.name}', '${user.email}', '${password}')`
 
-        db.query(sql, (err) => {
-            if (err) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
+        await db.query(sql)
 
-            return res.status(StatusCodes.OK).json({ msg: "User added" })
-        })
-    })
+        return res.status(StatusCodes.OK).json({ msg: "User added" })
+
+    } catch (err) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
+    }
 }
