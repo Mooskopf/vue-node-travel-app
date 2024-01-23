@@ -3,6 +3,7 @@ import Home from '@/pages/Index.vue'
 import Destination from '@/pages/Destination.vue'
 import Login from '@/pages/Login.vue'
 import Register from '@/pages/Register.vue'
+import Profile from '@/pages/Profile.vue'
 import { useAuthStore } from '@/stores/authstore'
 
 export const router = createRouter({
@@ -27,6 +28,11 @@ export const router = createRouter({
       path: '/destination/:destination',
       name: 'destination',
       component: Destination
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 })

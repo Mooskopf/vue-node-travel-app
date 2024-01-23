@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express"
+import { verifyUser } from "../middleware/authMiddleware"
+
 import { addDestination } from "../routes/addDestination"
 import { getDestinations } from "../routes/getDestinations"
 import { register } from "../routes/register"
 import { login } from "../routes/login"
 import { addReview } from "../routes/addReview"
-import { verifyUser } from "../middleware/authMiddleware"
+import { getReviews } from "../routes/getReviews"
 
 export const router = express.Router()
 
@@ -26,4 +28,8 @@ router.get("/getdestinations", verifyUser, (req: Request, res: Response) => {
 
 router.post("/addreview", verifyUser, (req: Request, res: Response) => {
     addReview(req, res)
+})
+
+router.post("/getreviews", verifyUser, (req: Request, res: Response) => {
+    getReviews(req, res)
 })

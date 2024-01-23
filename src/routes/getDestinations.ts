@@ -20,6 +20,7 @@ export async function getDestinations(res: Response) {
             reviewResult[0].forEach((review: any) => {
 
                 const data = {
+                    destination: result[0][i].name,
                     author: review.author,
                     stars: review.stars,
                     text: review.text

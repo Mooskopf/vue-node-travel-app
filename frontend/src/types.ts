@@ -9,15 +9,21 @@ export type DestinationResponse = {
 }
 
 export type User = {
-    name: string,
+    name: string
     email: string
 }
 
 export type Stars = 0 | 1 | 2 | 3 | 4 | 5
 
 export type Review = {
+    destination: string,
     author: string,
     stars: Stars,
     text: string
 }
+
+export type ReviewResponse = {
+    reviews: Review[]
+}
+
 

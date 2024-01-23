@@ -29,13 +29,11 @@ import { ref, onMounted } from 'vue';
 import addReview from '@/api/addReview';
 import StarSelector from "@/components/destination/StarSelector.vue"
 import type { Stars, Review, Destination } from "@/types"
-import { useStateStore } from '@/stores/statestore';
 import { useAuthStore } from '@/stores/authstore';
 import { useDataStore } from '@/stores/datastore';
 import StarViewer from '@/components/destination/StarViewer.vue';
 
 const route = useRoute()
-const stateStore = useStateStore()
 const authstore = useAuthStore()
 const datastore = useDataStore()
 
@@ -64,10 +62,11 @@ function submitReview() {
         return
     }
 
-    if (stateStore.user) {
+    if (datastore.username) {
 
         const review: Review = {
-            author: stateStore.user?.name,
+            destination: name.value,
+            author: datastore.username,
             stars: stars.value,
             text: input.value
         }
@@ -121,11 +120,11 @@ textarea {
     margin-bottom: 30px;
 }
 
-.review-add{
+.review-add {
     margin-top: 80px;
 }
 
-.review-text{
+.review-text {
     margin-top: 10px
 }
 </style>

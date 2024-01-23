@@ -10,12 +10,19 @@ export async function register(req: Request, res: Response) {
     let password = req.body?.password
 
     const sqlMail = `SELECT * FROM users WHERE users.email = '${user.email}'`
+    const sqlName = `SELECT * FROM users WHERE users.name = '${user.name}'`
 
     try {
-        const result: any = await db.query(sqlMail)
+        const resultMail: any = await db.query(sqlMail)
 
-        if (result[0].length !== 0) {
+        if (resultMail[0].length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Email exists" })
+        }
+
+        const resultName: any = await db.query(sqlName)
+
+        if (resultName[0].length !== 0) {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Username exists" })
         }
 
         await bcrypt.hash(password, 10)

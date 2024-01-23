@@ -1,9 +1,11 @@
 <template>
-    <RouterLink :to="'/destination/' + props.destination.name.toLowerCase()">
-        <div class="destination" :class="props.destination.color">
-            {{ props.destination.name }}
-        </div>
-    </RouterLink>
+    <div v-if="props.destination">
+        <RouterLink :to="'/destination/' + props.destination.name.toLowerCase()">
+            <div class="destination" :class="props.destination.color">
+                {{ props.destination.name }}
+            </div>
+        </RouterLink>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +14,7 @@ import { type Destination } from '@/types'
 
 
 const props = defineProps<{
-    destination: Destination
+    destination: Destination | undefined
 }>()
 
 </script>

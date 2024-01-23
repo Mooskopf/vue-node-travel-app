@@ -1,15 +1,17 @@
 <template>
     <nav>
-        <RouterLink to="/">
-            <div class="header">
-                <BackIcon v-if="router.currentRoute.value.fullPath !== '/' && router.currentRoute.value.fullPath !== '/login'
-                    && router.currentRoute.value.fullPath !== '/register'" />
-                <div v-else></div>
-                <button v-if="router.currentRoute.value.fullPath !== '/login'
-                    && router.currentRoute.value.fullPath !== '/register'" type="button" class="btn"
-                    @click="authstore.logout()">Logout</button>
+        <div class="header">
+            <RouterLink v-if="router.currentRoute.value.fullPath !== '/'" to="/">
+                <BackIcon />
+            </RouterLink>
+            <div v-else></div>
+            <div class="right">
+                <RouterLink to="/profile">
+                    <button type="button" class="btn">Profile</button>
+                </RouterLink>
+                <button type="button" class="btn" @click="authstore.logout()">Logout</button>
             </div>
-        </RouterLink>
+        </div>
     </nav>
 </template>
 
@@ -38,8 +40,10 @@ svg {
     grid-template-columns: 1fr 1fr;
     align-items: center;
 
-    button {
+    .right {
         justify-self: right;
+        display: flex;
+        gap: 10px;
     }
 }
 </style>

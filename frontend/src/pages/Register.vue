@@ -82,7 +82,7 @@ async function checkInputs() {
     const mailExists = await register(user, password.value)
     
     if (mailExists) {
-        errorMail.value = "Email exists"
+        errorMail.value = "Email or Username already exists"
     }
 }
 
