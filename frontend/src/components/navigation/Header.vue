@@ -1,9 +1,9 @@
 <template>
     <nav>
         <div class="header">
-            <RouterLink v-if="router.currentRoute.value.fullPath !== '/'" to="/">
+            <button class="hide-btn" type="button" v-if="router.currentRoute.value.fullPath !== '/'" @click="router.back()">
                 <BackIcon />
-            </RouterLink>
+            </button>
             <div v-else></div>
             <div class="right">
                 <RouterLink to="/profile">
