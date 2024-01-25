@@ -13,11 +13,13 @@
             <h3>Review</h3>
             <StarSelector :updateStars="updateStars" />
             <div>
-                <textarea v-model="input" @focus="errorInput = false"></textarea>
+                <textarea :class="{errorText: errorInput}" v-model="input" @focus="errorInput = false"></textarea>
             </div>
             <div class="error-text" v-if="errorInput">Please fill out this field</div>
-            <button type="button" class="btn" @click="submitReview">Submit</button>
-            <button type="button" class="btn" @click="addingReview = false">Back</button>
+            <div class="buttons">
+                <button type="button" class="btn" @click="submitReview">Submit</button>
+                <button type="button" class="btn" @click="addingReview = false">Back</button>
+            </div>
         </div>
         <button v-else type="button" class="btn" @click="addingReview = true">Add a Review</button>
     </div>
@@ -58,7 +60,7 @@ onMounted(() => {
 
 function submitReview() {
     if (input.value === "") {
-        errorInput.value = false
+        errorInput.value = true
         return
     }
 
@@ -98,7 +100,7 @@ function updateStars(val: Stars) {
 textarea {
     width: 80%;
     height: 200px;
-    margin: 20px 0px;
+    margin-top: 20px;
     padding: 20px;
     resize: none;
     outline: none;
@@ -107,6 +109,10 @@ textarea {
     &:focus {
         border: 2px solid var(--clr-primary);
     }
+}
+
+.errorText{
+    border: 2px solid var(--clr-error);
 }
 
 .btn {
@@ -126,5 +132,9 @@ textarea {
 
 .review-text {
     margin-top: 10px
+}
+
+.buttons{
+    margin-top: 20px;
 }
 </style>

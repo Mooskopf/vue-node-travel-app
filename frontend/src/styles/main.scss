@@ -38,6 +38,14 @@ a{
     font-size: 1.2rem;
 }
 
+.hide-btn{
+    width: fit-content;
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
 .err {
     border: 2px solid var(--clr-error) !important;
 }
