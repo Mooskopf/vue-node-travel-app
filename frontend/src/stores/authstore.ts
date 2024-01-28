@@ -8,7 +8,7 @@ import router from '@/router'
 export const useAuthStore = defineStore('counter', () => {
     const token = ref<string | null>(localStorage.getItem("token"))
 
-    function login(email: string, password: string): boolean {
+    async function login(email: string, password: string): Promise<boolean> {
         const { username, useremail } = storeToRefs(useDataStore())
 
         const data = {
@@ -16,7 +16,8 @@ export const useAuthStore = defineStore('counter', () => {
             password: password
         }
 
-        request("post", "/login", data).then((res) => {
+        let out = true
+        await request("post", "/login", data).then((res) => {
             token.value = res.token
             username.value = res.user.name
             useremail.value = res.user.email
@@ -26,10 +27,10 @@ export const useAuthStore = defineStore('counter', () => {
             router.push("/")
         }).catch(err => {
             console.log(err)
-            return false
+            out = false
         })
 
-        return true
+        return out
     }
 
     function logout() {

@@ -41,7 +41,7 @@ function updatePassword(value: string) {
     password.value = value
 }
 
-function login() {
+async function login() {
     if (email.value === "") {
         errorMailEmpty.value = true
         return
@@ -57,7 +57,7 @@ function login() {
         return
     }
 
-    const loggedin = authstore.login(email.value, password.value)
+    const loggedin = await authstore.login(email.value, password.value)
 
     if (!loggedin) {
         loginError.value = true
