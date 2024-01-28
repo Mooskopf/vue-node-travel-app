@@ -7,6 +7,8 @@ import { register } from "../routes/register"
 import { login } from "../routes/login"
 import { addReview } from "../routes/addReview"
 import { getReviews } from "../routes/getReviews"
+import { addToUserDestinationList } from "../routes/addToUserDestinationList"
+import { getUserDestinationList } from "../routes/getUserDestinationList"
 
 export const router = express.Router()
 
@@ -32,4 +34,16 @@ router.post("/addreview", verifyUser, (req: Request, res: Response) => {
 
 router.post("/getreviews", verifyUser, (req: Request, res: Response) => {
     getReviews(req, res)
+})
+
+router.post("/getreviews", verifyUser, (req: Request, res: Response) => {
+    getReviews(req, res)
+})
+
+router.post("/getuserdestinationlist", verifyUser, (req: Request, res: Response) => {
+    getUserDestinationList(req, res)
+})
+
+router.post("/addtouserdestinationlist", verifyUser, (req: Request, res: Response) => {
+    addToUserDestinationList(req, res)
 })

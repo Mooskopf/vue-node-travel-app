@@ -15,3 +15,8 @@ export type Review = {
     stars: 0 | 1 | 2 | 3 | 4 | 5,
     text: string
 }
+
+export type UserDestination = {
+    useremail: string,
+    destination: string,
+}

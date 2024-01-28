@@ -6,7 +6,8 @@ export const useDataStore = defineStore('dataStore', () => {
     const destinations = ref<Destination[]>([])
     const username = ref(localStorage.getItem("username"))
     const useremail = ref(localStorage.getItem("useremail"))
+    const userDestinationList = ref<string[]>([])
     const reviews = ref<Review[] | null>(null)
 
-    return { destinations, username, useremail, reviews }
+    return { destinations, userDestinationList, username, useremail, reviews }
 })

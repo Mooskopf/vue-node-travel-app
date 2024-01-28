@@ -1,6 +1,9 @@
 <template>
     <div>
         <h1>{{ name }}</h1>
+        <button v-if="!datastore.userDestinationList.find(destination => destination === name)" type="button" class="btn"
+            @click="addToList">Add to my list</button>
+        <div class="spacer"></div>
         <h2 v-if="destination?.reviews.length && destination?.reviews.length > 0">Reviews</h2>
         <div class="reviews">
             <div class="review" v-for="(review, index) in destination?.reviews" :key="index">
@@ -13,7 +16,7 @@
             <h3>Review</h3>
             <StarSelector :updateStars="updateStars" />
             <div>
-                <textarea :class="{errorText: errorInput}" v-model="input" @focus="errorInput = false"></textarea>
+                <textarea :class="{ errorText: errorInput }" v-model="input" @focus="errorInput = false"></textarea>
             </div>
             <div class="error-text" v-if="errorInput">Please fill out this field</div>
             <div class="buttons">
@@ -23,6 +26,17 @@
         </div>
         <button v-else type="button" class="btn" @click="addingReview = true">Add a Review</button>
     </div>
+    <Modal v-if="modalActive" :closeModal="closeModal">
+        <div v-if="addToListSuccess" class="modal-text">
+            Success
+        </div>
+        <div v-else class="modal-text">
+            Something went wrong
+        </div>
+        <div class="center">
+            <button type="button" class="btn" @click="closeModal">Close</button>
+        </div>
+    </Modal>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +48,8 @@ import type { Stars, Review, Destination } from "@/types"
 import { useAuthStore } from '@/stores/authstore';
 import { useDataStore } from '@/stores/datastore';
 import StarViewer from '@/components/destination/StarViewer.vue';
+import addToUserDestinationList from '@/api/addToUserDestinationList';
+import Modal from '@/components/generic/Modal.vue';
 
 const route = useRoute()
 const authstore = useAuthStore()
@@ -45,6 +61,8 @@ const input = ref("")
 const stars = ref<Stars>(0)
 const destination = ref<Destination | null>(null)
 const name = ref("")
+const modalActive = ref(false)
+const addToListSuccess = ref(true)
 
 onMounted(() => {
     name.value = typeof route.params.destination === "string" ?
@@ -94,6 +112,23 @@ function updateStars(val: Stars) {
     stars.value = val
 }
 
+async function addToList() {
+    const success = await addToUserDestinationList(name.value)
+
+    modalActive.value = true
+
+    if (success) {
+        addToListSuccess.value = true
+    } else {
+        addToListSuccess.value = false
+    }
+}
+
+function closeModal() {
+    modalActive.value = false
+}
+
+
 </script>
 
 <style scoped lang="scss">
@@ -111,7 +146,7 @@ textarea {
     }
 }
 
-.errorText{
+.errorText {
     border: 2px solid var(--clr-error);
 }
 
@@ -134,7 +169,13 @@ textarea {
     margin-top: 10px
 }
 
-.buttons{
+.buttons {
     margin-top: 20px;
+}
+
+.modal-text {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 </style>

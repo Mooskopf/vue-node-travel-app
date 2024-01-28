@@ -4,6 +4,8 @@ import request from '@/helpers/request'
 import { useDataStore } from './datastore'
 import { storeToRefs } from 'pinia'
 import router from '@/router'
+import getUserDestinationList from '@/api/getUserDestinationList'
+import getReviews from '@/api/getReviews'
 
 export const useAuthStore = defineStore('counter', () => {
     const token = ref<string | null>(localStorage.getItem("token"))
@@ -24,6 +26,8 @@ export const useAuthStore = defineStore('counter', () => {
             localStorage.setItem("token", res.token)
             localStorage.setItem("username", res.user.name)
             localStorage.setItem("useremail", res.user.email)
+            getUserDestinationList()
+            getReviews()
             router.push("/")
         }).catch(err => {
             console.log(err)
