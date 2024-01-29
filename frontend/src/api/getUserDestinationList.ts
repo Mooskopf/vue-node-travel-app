@@ -10,7 +10,7 @@ export default async function getUserDestinationList() {
         useremail: useremail.value
     }
 
-    request("post", "/getuserdestinationlist", data).then(res => {
+    request("post", "/userdestinationlist", data).then(res => {
         userDestinationList.value = res.destinations
     }).catch(err => {
         console.log(err)

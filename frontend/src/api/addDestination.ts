@@ -11,7 +11,7 @@ export default async function addDestination(destination: Destination): Promise<
 
     let out = false
 
-    await request("post", "/adddestination", data).then(() => {
+    await request("post", "/destinations/add", data).then(() => {
         destinations.value.push(destination)
     }).catch(err => {
         if (err.response.status === 500) {

@@ -12,7 +12,7 @@ export default async function addToUserDestinationList(destination: string): Pro
 
     let out = true
 
-    await request("post", "/addtouserdestinationlist", data)
+    await request("post", "/userdestinationlist/add", data)
         .catch(err => {
             console.log(err)
             out = false

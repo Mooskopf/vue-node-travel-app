@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('counter', () => {
         }
 
         let out = true
-        await request("post", "/login", data).then((res) => {
+        await request("post", "/user/login", data).then((res) => {
             token.value = res.token
             username.value = res.user.name
             useremail.value = res.user.email

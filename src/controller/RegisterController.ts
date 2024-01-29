@@ -2,7 +2,7 @@ import { db } from "../index";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express"
 import bcrypt from "bcrypt"
-import type { User } from "../types";
+import type { User } from "../models/User";
 
 export async function register(req: Request, res: Response) {
 

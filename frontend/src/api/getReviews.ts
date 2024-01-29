@@ -10,7 +10,7 @@ export default async function getReviews() {
         username: username.value
     }
 
-    request("post", "/getReviews", data).then((res: ReviewResponse) => {
+    request("post", "/reviews", data).then((res: ReviewResponse) => {
         reviews.value = res.reviews
     }).catch(err => {
         console.log(err)

@@ -3,7 +3,10 @@ import mysql from "mysql2/promise"
 import dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
-import { router } from "./router/routes"
+import { userRouter } from "./router/UserRouter"
+import { destinationsRouter } from "./router/DestinationsRouter"
+import { reviewsRouter } from "./router/ReviewsRouter"
+import { userDestinationListRouter } from "./router/UserDestinationListRouter"
 
 dotenv.config()
 
@@ -28,7 +31,11 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
-app.use("/", router)
+
+app.use("/user", userRouter)
+app.use("/destinations", destinationsRouter)
+app.use("/reviews", reviewsRouter)
+app.use("/userdestinationlist", userDestinationListRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)

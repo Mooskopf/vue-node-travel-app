@@ -11,7 +11,7 @@ export default async function addReview(review: Review, name: string) {
         review: review
     }
 
-    request("post", "/addreview", data).then(() => {
+    request("post", "/reviews/add", data).then(() => {
         destinations.value.forEach(destination => {
             if(destination.name === name){
                 destination.reviews.push(review)

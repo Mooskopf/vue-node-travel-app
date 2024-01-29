@@ -12,7 +12,7 @@ export default async function register(userObject: User, password: string) {
 
     let out = false
 
-    await request("post", "/register", data).then(() => {
+    await request("post", "/user/register", data).then(() => {
         authstore.login(userObject.email, password)
     }).catch(err => {
         if (err.response.status === 500) {
