@@ -17,7 +17,7 @@ import { ref } from "vue";
 import { useDataStore } from "@/stores/datastore";
 import { storeToRefs } from "pinia";
 import { onMounted } from 'vue';
-import getDestinations from '@/api/getDestinations';
+import getDestinations from '@/api/destinations/getDestinations';
 
 const { destinations } = storeToRefs(useDataStore())
 const modalActive = ref(false)

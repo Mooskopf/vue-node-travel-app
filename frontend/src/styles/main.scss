@@ -3,7 +3,7 @@
 @import "./grid.scss";
 @import "./logged-out-page.scss";
 
-*{
+* {
     margin: 0;
     padding: 0;
 }
@@ -18,16 +18,35 @@
     --clr-error: #a32121;
 }
 
-a{
+a {
     text-decoration: none;
     color: unset;
 }
 
-.spacer{
+textarea {
+    width: 80%;
+    height: 200px;
+    margin-top: 20px;
+    padding: 20px;
+    resize: none;
+    outline: none;
+    border: 2px solid black;
+
+    &:focus {
+        border: 2px solid var(--clr-primary);
+    }
+}
+
+textarea.errorText {
+    border: 2px solid var(--clr-error);
+}
+
+
+.spacer {
     height: 100px;
 }
 
-.btn{
+.btn {
     border: none;
     outline: none;
     background-color: black;
@@ -38,7 +57,19 @@ a{
     font-size: 1.2rem;
 }
 
-.hide-btn{
+.background-red{
+    background-color: var(--clr-error);
+}
+
+.background-blue{
+    background-color: var(--clr-primary);
+}
+
+.background-green{
+    background-color: var(--clr-secondary);
+}
+
+.hide-btn {
     width: fit-content;
     outline: none;
     border: none;

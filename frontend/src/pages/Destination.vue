@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1>{{ name }}</h1>
-        <button v-if="!datastore.userDestinationList.find(destination => destination === name)" type="button" class="btn"
-            @click="addToList">Add to my list</button>
+        <button v-if="!datastore.userDestinationList.find(destination => destination.destination === name)" type="button"
+            class="btn" @click="addToList">Add to my list</button>
         <div class="spacer"></div>
         <h2 v-if="destination?.reviews.length && destination?.reviews.length > 0">Reviews</h2>
         <div class="reviews">
@@ -26,7 +26,7 @@
         </div>
         <button v-else type="button" class="btn" @click="addingReview = true">Add a Review</button>
     </div>
-    <Modal v-if="modalActive" :closeModal="closeModal">
+    <Modal v-if="modalActive" :closeModal="() => modalActive = false">
         <div v-if="addToListSuccess" class="modal-text">
             Success
         </div>
@@ -42,13 +42,13 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue';
-import addReview from '@/api/addReview';
+import addReview from '@/api/reviews/addReview';
 import StarSelector from "@/components/destination/StarSelector.vue"
 import type { Stars, Review, Destination } from "@/types"
 import { useAuthStore } from '@/stores/authstore';
 import { useDataStore } from '@/stores/datastore';
 import StarViewer from '@/components/destination/StarViewer.vue';
-import addToUserDestinationList from '@/api/addToUserDestinationList';
+import addToUserDestinationList from '@/api/user_destination_list/addToUserDestinationList';
 import Modal from '@/components/generic/Modal.vue';
 
 const route = useRoute()
@@ -124,32 +124,9 @@ async function addToList() {
     }
 }
 
-function closeModal() {
-    modalActive.value = false
-}
-
-
 </script>
 
 <style scoped lang="scss">
-textarea {
-    width: 80%;
-    height: 200px;
-    margin-top: 20px;
-    padding: 20px;
-    resize: none;
-    outline: none;
-    border: 2px solid black;
-
-    &:focus {
-        border: 2px solid var(--clr-primary);
-    }
-}
-
-.errorText {
-    border: 2px solid var(--clr-error);
-}
-
 .btn {
     margin-right: 10px;
 }

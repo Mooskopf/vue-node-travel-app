@@ -6,8 +6,8 @@ import type { User } from "../models/User";
 
 export async function register(req: Request, res: Response) {
 
-    const user: User = req.body?.user
-    let password = req.body?.password
+    const user: User = req.body.user
+    let password = req.body.password
 
     const sqlMail = `SELECT * FROM users WHERE users.email = '${user.email}'`
     const sqlName = `SELECT * FROM users WHERE users.name = '${user.name}'`

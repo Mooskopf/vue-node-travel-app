@@ -7,8 +7,8 @@ import type { User } from "../models/User";
 
 export async function login(req: Request, res: Response) {
 
-    const email: string = req.body?.email
-    let password: string = req.body?.password
+    const email: string = req.body.email
+    let password: string = req.body.password
 
     const sqlMail = `SELECT * FROM users WHERE users.email = '${email}'`
 

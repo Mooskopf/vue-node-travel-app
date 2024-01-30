@@ -21,7 +21,7 @@
 import { ref } from 'vue';
 import Select from '@/components/generic/Select.vue';
 import Input from '@/components/generic/Input.vue';
-import addDestination from '@/api/addDestination';
+import addDestination from '@/api/destinations/addDestination';
 
 const errorState = ref(false)
 const error = ref("")

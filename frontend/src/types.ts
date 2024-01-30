@@ -26,4 +26,9 @@ export type ReviewResponse = {
     reviews: Review[]
 }
 
+export type UserDestination = {
+    useremail: string,
+    destination: string,
+    note: string
+}
 

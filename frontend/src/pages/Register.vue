@@ -22,7 +22,7 @@
 import Input from '@/components/generic/Input.vue'
 import { ref } from 'vue'
 import { validateEmail, validatePassword } from "@/helpers/functions"
-import register from '@/api/register';
+import register from '@/api/user/register';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()

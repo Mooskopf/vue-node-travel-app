@@ -4,9 +4,9 @@ import { Request, Response } from "express"
 import { Destination } from "../models/Destination";
 import { Review } from "../models/Review";
 
-export async function addDestination(req: Request, res: Response) {
+export async function add(req: Request, res: Response) {
 
-    const sqlName = `SELECT * FROM destinations WHERE destinations.name = '${req.body?.destination.name}'`
+    const sqlName = `SELECT * FROM destinations WHERE destinations.name = '${req.body.destination.name}'`
 
     try {
         const result: any = await db.query(sqlName)
@@ -15,7 +15,7 @@ export async function addDestination(req: Request, res: Response) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Destination exists" })
         }
 
-        let sql = `INSERT INTO destinations(name, color) VALUES ('${req.body?.destination.name}', '${req.body?.destination.color}')`
+        let sql = `INSERT INTO destinations(name, color) VALUES ('${req.body.destination.name}', '${req.body.destination.color}')`
 
         await db.query(sql)
 
@@ -27,7 +27,7 @@ export async function addDestination(req: Request, res: Response) {
 }
 
 
-export async function getDestinations(req: Request, res: Response) {
+export async function get(req: Request, res: Response) {
     const sql = "SELECT * FROM `destinations`"
     let destinations: Destination[] = []
 
