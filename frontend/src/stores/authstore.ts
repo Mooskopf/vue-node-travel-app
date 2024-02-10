@@ -7,7 +7,7 @@ import router from '@/router'
 import getUserDestinationList from '@/api/user_destination_list/getUserDestinationList'
 import getReviews from '@/api/reviews/getReviews'
 
-export const useAuthStore = defineStore('counter', () => {
+export const useAuthStore = defineStore('authstore', () => {
     const token = ref<string | null>(localStorage.getItem("token"))
 
     async function login(email: string, password: string): Promise<boolean> {

@@ -34,7 +34,7 @@
             Something went wrong
         </div>
         <div class="center">
-            <button type="button" class="btn" @click="closeModal">Close</button>
+            <button type="button" class="btn" @click="() => modalActive = false">Close</button>
         </div>
     </Modal>
 </template>
