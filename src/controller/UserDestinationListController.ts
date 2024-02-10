@@ -32,8 +32,6 @@ export async function get(req: Request, res: Response) {
         const destinations: UserDestination[] = []
 
         result[0].forEach((userdestination: UserDestination) => {
-
-            console.log(userdestination)
             destinations.push(userdestination)
         })
 
