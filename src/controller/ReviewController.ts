@@ -5,10 +5,10 @@ import type { Review } from "../models/Review";
 
 export async function add(req: Request, res: Response) {
 
-    const sql = `INSERT INTO reviews(author, destination, stars, text) VALUES ('${req.body.review.author}', '${req.body.destination}', '${req.body.review.stars}', '${req.body.review.text.toString()}')`
+    const sql = `INSERT INTO reviews(author, destination, stars, text) VALUES (?, ?, ?, ?)`
 
     try {
-        await db.query(sql)
+        await db.query(sql, [req.body.review.author, req.body.destination, req.body.review.stars, req.body.review.text.toString()])
         return res.status(StatusCodes.OK).json({ msg: "Added review" })
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
@@ -16,10 +16,10 @@ export async function add(req: Request, res: Response) {
 }
 
 export async function get(req: Request, res: Response) {
-    const sql = `SELECT * FROM reviews WHERE reviews.author = '${req.body.username}'`
+    const sql = `SELECT * FROM reviews WHERE reviews.author = ?`
 
     try {
-        const result: any = await db.query(sql)
+        const result: any = await db.query(sql, req.body.username)
 
         const reviews: Review[] = []
 

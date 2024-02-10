@@ -10,10 +10,10 @@ export async function login(req: Request, res: Response) {
     const email: string = req.body.email
     let password: string = req.body.password
 
-    const sqlMail = `SELECT * FROM users WHERE users.email = '${email}'`
+    const sqlMail = `SELECT * FROM users WHERE users.email = ?`
 
     try {
-        const result: any = await db.query(sqlMail)
+        const result: any = await db.query(sqlMail, email)
 
         if (result.length === 0) {
             return res.status(StatusCodes.NOT_FOUND).json({ msg: "User does not exist" })

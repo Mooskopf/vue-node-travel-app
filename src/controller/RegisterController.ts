@@ -9,17 +9,18 @@ export async function register(req: Request, res: Response) {
     const user: User = req.body.user
     let password = req.body.password
 
-    const sqlMail = `SELECT * FROM users WHERE users.email = '${user.email}'`
-    const sqlName = `SELECT * FROM users WHERE users.name = '${user.name}'`
+    const sqlMail = `SELECT * FROM users WHERE users.email = ?`
 
     try {
-        const resultMail: any = await db.query(sqlMail)
+        const resultMail: any = await db.query(sqlMail, user.email)
 
         if (resultMail[0].length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Email exists" })
         }
 
-        const resultName: any = await db.query(sqlName)
+        const sqlName = `SELECT * FROM users WHERE users.name = ?`
+
+        const resultName: any = await db.query(sqlName, user.name)
 
         if (resultName[0].length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Username exists" })
@@ -33,9 +34,9 @@ export async function register(req: Request, res: Response) {
                 return
             })
 
-        const sql = `INSERT INTO users(name, email, password) VALUES ('${user.name}', '${user.email}', '${password}')`
+        const sql = `INSERT INTO users(name, email, password) VALUES (?, ?, ?)`
 
-        await db.query(sql)
+        await db.query(sql, [user.name, user.email, password])
 
         return res.status(StatusCodes.OK).json({ msg: "User added" })
 

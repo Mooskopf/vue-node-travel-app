@@ -5,17 +5,17 @@ import type { UserDestination } from "../models/UserDestination";
 
 export async function add(req: Request, res: Response) {
 
-    const sqlCheck = `SELECT * from userdestinationlist WHERE userdestinationlist.useremail = '${req.body.useremail}' AND userdestinationlist.destination = '${req.body.destination}'`
+    const sqlCheck = `SELECT * from userdestinationlist WHERE userdestinationlist.useremail = ? AND userdestinationlist.destination = ?`
 
     try {
-        const result: any = await db.query(sqlCheck)
+        const result: any = await db.query(sqlCheck, [req.body.useremail, req.body.destination])
 
         if (result[0].length > 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Exists" })
         }
 
-        const sql = `INSERT INTO userdestinationlist(useremail, destination) VALUES ('${req.body.useremail}', '${req.body.destination}')`
-        await db.query(sql)
+        const sql = `INSERT INTO userdestinationlist(useremail, destination) VALUES (?, ?)`
+        await db.query(sql, [req.body.useremail, req.body.destination])
         return res.status(StatusCodes.OK).json({ msg: "Added review" })
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
@@ -24,10 +24,10 @@ export async function add(req: Request, res: Response) {
 
 export async function get(req: Request, res: Response) {
 
-    const sql = `SELECT * from userdestinationlist WHERE userdestinationlist.useremail = '${req.body.useremail}'`
+    const sql = `SELECT * from userdestinationlist WHERE userdestinationlist.useremail = ?`
 
     try {
-        const result: any = await db.query(sql)
+        const result: any = await db.query(sql, req.body.useremail)
 
         const destinations: UserDestination[] = []
 
@@ -43,10 +43,10 @@ export async function get(req: Request, res: Response) {
 
 export async function remove(req: Request, res: Response) {
 
-    const sql = `DELETE FROM userdestinationlist WHERE useremail='${req.body.useremail}' AND destination='${req.body.destination}'`
+    const sql = `DELETE FROM userdestinationlist WHERE useremail = ? AND destination = ?`
 
     try {
-        await db.query(sql)
+        await db.query(sql, [req.body.useremail, req.body.destination])
         return res.status(StatusCodes.OK).json({ msg: "Removed user destination" })
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
@@ -55,10 +55,10 @@ export async function remove(req: Request, res: Response) {
 
 export async function updateNote(req: Request, res: Response) {
 
-    const sql = `UPDATE userdestinationlist SET note='${req.body.note}' WHERE userdestinationlist.useremail = '${req.body.useremail}' AND userdestinationlist.destination = '${req.body.destination}'`
+    const sql = `UPDATE userdestinationlist SET note= ? WHERE userdestinationlist.useremail = ? AND userdestinationlist.destination = ?`
 
     try {
-        await db.query(sql)
+        await db.query(sql, [req.body.note, req.body.useremail, req.body.destination])
         return res.status(StatusCodes.OK).json({ msg: "Updated note" })
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })

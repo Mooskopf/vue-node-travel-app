@@ -6,18 +6,18 @@ import { Review } from "../models/Review";
 
 export async function add(req: Request, res: Response) {
 
-    const sqlName = `SELECT * FROM destinations WHERE destinations.name = '${req.body.destination.name}'`
+    const sqlName = `SELECT * FROM destinations WHERE destinations.name = ?`
 
     try {
-        const result: any = await db.query(sqlName)
+        const result: any = await db.query(sqlName, req.body.destination.name)
 
         if (result[0].length !== 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Destination exists" })
         }
 
-        let sql = `INSERT INTO destinations(name, color) VALUES ('${req.body.destination.name}', '${req.body.destination.color}')`
+        let sql = `INSERT INTO destinations(name, color) VALUES (?, ?)`
 
-        await db.query(sql)
+        await db.query(sql, [req.body.destination.name, req.body.destination.color])
 
         return res.status(StatusCodes.OK).json({ msg: "Added destination" })
 
@@ -36,10 +36,10 @@ export async function get(req: Request, res: Response) {
 
         for (let i = 0; i < result[0].length; i++) {
 
-            const reviewSQL = `SELECT * FROM reviews WHERE reviews.destination = '${result[0][i].name}'`
+            const reviewSQL = `SELECT * FROM reviews WHERE reviews.destination = ?`
             const reviews: Review[] = []
 
-            const reviewResult: any = await db.query(reviewSQL)
+            const reviewResult: any = await db.query(reviewSQL, result[0][i].name)
 
             reviewResult[0].forEach((review: any) => {
 
