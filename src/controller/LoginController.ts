@@ -4,11 +4,12 @@ import { Request, Response } from "express"
 import bcrypt from "bcrypt"
 import jwt, { Secret } from "jsonwebtoken"
 import type { User } from "../models/User";
+import { validateEmail, validatePassword } from "../helpers/helpers";
 
 export async function login(req: Request, res: Response) {
 
     const email: string = req.body.email
-    let password: string = req.body.password
+    const password: string = req.body.password
 
     const sqlMail = `SELECT * FROM users WHERE users.email = ?`
 
@@ -16,7 +17,7 @@ export async function login(req: Request, res: Response) {
         const result: any = await db.query(sqlMail, email)
 
         if (result.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({ msg: "User does not exist" })
+            return res.status(StatusCodes.NOT_FOUND).json({ err: "User does not exist" })
         }
 
         const user: User = {
@@ -36,7 +37,7 @@ export async function login(req: Request, res: Response) {
                     return res.status(StatusCodes.OK).json({ token: token, user: user })
                 }
 
-                return res.status(StatusCodes.FORBIDDEN).json({ msg: "Password not correct" })
+                return res.status(StatusCodes.FORBIDDEN).json({ err: "Password not correct" })
             })
 
     } catch (err) {

@@ -2,20 +2,37 @@ import { db } from "../index";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express"
 import type { UserDestination } from "../models/UserDestination";
+import { destinationExists, mailExists } from "../helpers/helpersWithQuery";
 
 export async function add(req: Request, res: Response) {
 
     const sqlCheck = `SELECT * from userdestinationlist WHERE userdestinationlist.useremail = ? AND userdestinationlist.destination = ?`
 
+    const email = req.body.useremail
+    const destination = req.body.destination
+
     try {
-        const result: any = await db.query(sqlCheck, [req.body.useremail, req.body.destination])
+        const checkMail = await mailExists(email)
+        if (!checkMail) {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: "Email does not exist" })
+        }
+        const checkDestination = await destinationExists(destination)
+        if (!checkDestination) {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: "Destination does not exist" })
+        }
+    } catch (err) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })
+    }
+
+    try {
+        const result: any = await db.query(sqlCheck, [email, destination])
 
         if (result[0].length > 0) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Exists" })
         }
 
         const sql = `INSERT INTO userdestinationlist(useremail, destination) VALUES (?, ?)`
-        await db.query(sql, [req.body.useremail, req.body.destination])
+        await db.query(sql, [email, destination])
         return res.status(StatusCodes.OK).json({ msg: "Added review" })
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err })

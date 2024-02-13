@@ -3,21 +3,33 @@ import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express"
 import { Destination } from "../models/Destination";
 import { Review } from "../models/Review";
+import { hasNumber, isValidColor } from "../helpers/helpers";
 
 export async function add(req: Request, res: Response) {
+
+    const destination: string = req.body.destination.name
+    const color: string = req.body.destination.color
+
+    if (hasNumber(destination)) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: "No valid destination" })
+    }
+
+    if (!isValidColor(color)) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: "No valid color" })
+    }
 
     const sqlName = `SELECT * FROM destinations WHERE destinations.name = ?`
 
     try {
-        const result: any = await db.query(sqlName, req.body.destination.name)
+        const result: any = await db.query(sqlName, destination)
 
         if (result[0].length !== 0) {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Destination exists" })
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: "Destination exists" })
         }
 
         let sql = `INSERT INTO destinations(name, color) VALUES (?, ?)`
 
-        await db.query(sql, [req.body.destination.name, req.body.destination.color])
+        await db.query(sql, [destination, color])
 
         return res.status(StatusCodes.OK).json({ msg: "Added destination" })
 

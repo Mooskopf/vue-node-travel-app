@@ -1,3 +1,11 @@
+export function hasNumber(str: string): boolean {
+    return /\d/.test(str);
+}
+
+export function isValidColor(clr: string) {
+    return clr === "blue" || clr === "yellow" || clr === "green"
+}
+
 export function validateEmail(email: string): RegExpMatchArray | null {
     return String(email)
         .toLowerCase()
@@ -13,5 +21,8 @@ export function validatePassword(password: string): boolean {
         /[0-9]/.test(password) &&
         /[^A-Za-z0-9]/.test(password) &&
         password.length > 8;
+}
 
+export function isValidStarRange(stars: number): boolean {
+    return stars % 1 === 0 && stars >= 1 && stars <= 5
 }
